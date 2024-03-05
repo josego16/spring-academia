@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <title></title>
+
+</head>
+
+<body>
+<div class="container-fluid">
+    <div th:fragment="navigation">
+        <nav sec:authorize="hasAuthority('admin')" class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">I.E.S Virgen del Carmen</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Inicio </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Usuarios
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="menu_modulo_usuarios" class="dropdown-item"
+                                       href="/usuarios">Lista-usuarios</a></li>
+                                <li><a id="menu_enseñanza_usuarios" class="dropdown-item" href="/usuarios/add">Agregar-usuario</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Alumnos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="menu_modulo_alumnos" class="dropdown-item"
+                                       href="/categorias">Lista-usuarios-</a></li>
+                                <li><a id="menu_enseñanza_alumnos" class="dropdown-item" href="/categorias/add">Agregar-alumno</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Profesores
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="menu_modulo_profesores" class="dropdown-item" href="/localidades">Lista-profesores</a>
+                                </li>
+                                <li><a id="menu_enseñanza_profesores" class="dropdown-item" href="/localidades/add">Agregar-profesor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ayuda"> Ayuda </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/acerca"> Sobre esta Web </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"> Desconexión </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+        <nav sec:authorize="hasAuthority('alumno')" class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">I.E.S Virgen del Carmen</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"> Inicio </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ayuda"> Ayuda </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/acerca"> Sobre esta Web </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"> Desconexión </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div th:fragment="footer">
+        <footer>
+            <div class="text-center">
+                <hr/>
+
+                <p>Entró en el sistema como:
+                    <span th:text="${#authentication.name}"></span>
+                    (<span th:text="${#authentication.authorities[0]}"></span>)
+                <p sec:authorize="hasAuthority('admin')">
+                    <b>Este párrafo sólo se ve si eres un admin</b>
+                </p>
+                </p>
+                <p>
+                    <span class="text-center">Ⓒ 2024. IES Virgen del Carmen. CFGS Desarrollo Multiplataforma.</span>
+                </p>
+                <hr/>
+            </div>
+            <script src="/webjars/jquery/jquery.min.js"></script>
+            <script src="/webjars/popper.js/umd/popper.min.js"></script>
+            <script src="/webjars/bootstrap/js/bootstrap.js"></script>
+        </footer>
+    </div>
+</div>
+</body>
+
+</html>
