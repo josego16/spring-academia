@@ -7,12 +7,15 @@
 </head>
 
 <body>
-<div th:replace="~{fragmentos/general.html :: navigation}"> </div>
-<div class="container">
-    <h5>Sobre esta WEBAPP</h5>
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
 
-    <p>Esta Aplicación Spring Web ha sido realizada por Jose Maria del Ciclo de Desarrollo de Aplicaciones Multiplataforma.</p>
-</div>
+<h4>Acceso denegado</h4>
+
+<p>Por favor identifíquese con el usuario con los privilegios correctos para acceder a esta parte de la Web.</p>
+
+<p><a href="/logout">Salir del sistema</a></p>
+
+
 <div th:replace="~{fragmentos/general.html :: footer}"></div>
 </body>
 
