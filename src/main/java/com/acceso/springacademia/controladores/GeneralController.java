@@ -25,4 +25,14 @@ public class GeneralController {
     public String showIndex() {
         return "index";
     }
+
+    // @GetMapping("/login")
+    // public String showlogin() {
+    //     return "login";
+    // }
+
+    @GetMapping("/denegado")
+    public String showlogin() {
+        return "denegado";
+    }
 }
