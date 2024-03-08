@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Eliminar un alumno</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+
+<div class="container">
+    <h3>Eliminar alumnos</h3>
+
+    <form method="post" th:action="|/alumnos/delete/${alumno.id}|" th:object="${alumno}">
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre: </label>
+                    <label>
+                        <input class="form-control" disabled th:field="*{nombre}" type="text"/>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Apellido: </label>
+                    <label>
+                        <input class="form-control" disabled th:field="*{apellido}" type="text"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Email:</label>
+                    <label>
+                        <input class="form-control" disabled name="email" th:field="*{email}" type="email"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre de alumno: </label>
+                    <label>
+                        <input class="form-control" disabled th:field="*{username}" type="text"/>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Contraseña:</label>
+                    <label>
+                        <input class="form-control" disabled th:field="*{password}" type="password"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <!-- <div class="col-md-6">
+                    <label class="form-label">Teléfono:
+                        <select th:field="*{telefono}" class="form-select">
+                            <option th:each="telefono : ${telefonos}" th:value="${telefono.numero}"
+                                th:text="${telefono.numero}"></option>
+                        </select>
+                    </label>
+                </div> -->
+                <div class="col-md-6">
+                    <label class="form-label">Roles:
+                        <select class="form-select" disabled multiple="multiple" th:field="*{roles}">
+                            <option th:each="rol : ${roles}" th:text="${rol.nombre}" th:value="${rol.id}"></option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <button class="btn btn-danger" type="submit">Borrar</button>
+                    <a class="btn btn-primary" href="/alumnos">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div th:replace="~{fragmentos/general.html :: footer}"></div>
+
+</div>
+</body>
+
+</html>
