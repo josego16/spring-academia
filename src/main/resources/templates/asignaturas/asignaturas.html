@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Asignatura</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+
+<div class="container">
+    <h3>Listado de Asignaturas</h3>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>nombre</th>
+            <th>curso</th>
+            <th>ciclo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="asignatura: ${asignaturas}">
+            <td th:text="${asignatura.nombre}"></td>
+            <td th:text="${asignatura.curso}"></td>
+            <td th:text="${asignatura.ciclo}"></td>
+            <td>
+                <a class="btn btn-success" th:href="|/asignaturas/edit/${asignatura.id}|">actualizar</a>
+                <a class="btn btn-danger" th:href="@{/asignaturas/delete/}+${asignatura.id}">borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="~{fragmentos/general.html :: footer}">
+</div>
+</body>
+
+</html>

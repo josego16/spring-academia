@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Su Zapatería Online: Gestión usuarios</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+<div class="container m-3">
+    <form class="row"
+          method="post"
+          th:action="@{/asignaturas/add}"
+          th:object="${asignaturas}">
+        <label>
+            <input hidden name="cp" th:value="${asignatura.id}" type="number"/>
+        </label>
+        <div class="mb-3">
+            <label class="form-label" for="nombre">Nombre de la asignatura:</label>
+            <label>
+                <input class="form-control" name="nombre" placeholder="Escriba aquí el nombre"
+                       th:value="${asignatura.nombre}"/>
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="curso">Curso:</label>
+            <label>
+                <input class="form-control" disabled name="curso"
+                       placeholder="Escriba aquí el curso" th:value="${asignatura.curso}"/>
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="ciclo">Ciclo</label>
+            <label>
+                <input class="form-control" name="curso" placeholder="Escriba aquí el ciclo"
+                       th:value="${asignatura.ciclo}"/>
+            </label>
+        </div>
+        <div>
+            <button class="btn btn-success mt-3" type="submit">Enviar</button>
+        </div>
+    </form>
+</div>
+<div th:replace="~{fragmentos/general.html :: footer}"></div>
+</body>
+
+</html>
