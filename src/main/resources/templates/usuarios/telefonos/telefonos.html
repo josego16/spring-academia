@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro General: Teléfonos de usuarios</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+<div class="container">
+    <p>Seleccione un usuario para ver sus teléfonos:</p>
+    <form id="formulario"
+          method="get" onchange="enviar()">
+        <div class="form-control">
+            <label>Selección del usuario a mostrar:</label>
+            <label for="seleccion"></label><select class="form-select" id="seleccion">
+            <option
+                    th:each="usuario : ${usuarios}"
+                    th:selected="(${usuario.id} == ${usuarioActual.id})?'selected':'false'"
+                    th:text="|${usuario.nombre} ${usuario.apellido}|"
+                    th:value="${usuario.id}"
+            >
+            </option>
+        </select>
+        </div>
+    </form>
+    <h4>Listando teléfonos del usario:
+        <span th:text="${usuarioActual.username}"></span>
+    </h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Código del país</td>
+            <td>Número de teléfono</td>
+            <td>Acciones</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="telefono: ${telefonos}">
+            <td th:text="${telefono.codigoPais}"></td>
+            <td th:text="${telefono.numero}"></td>
+            <td>
+                <a class="btn btn-success"
+                   th:href="|telefonos/${telefono.id}/edit|">Editar</a>
+                <a class="btn btn-danger"
+                   th:href="|telefonos/${telefono.id}/delete|">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="telefonos/add">Añadir un teléfono </a>
+
+    <script>
+        function enviar() {
+            let formulario = document.getElementById('formulario');
+            let seleccionado = document.getElementById('seleccion')
+            formulario.action = '/usuarios/' + seleccionado.value + "/telefonos"
+            formulario.submit();
+        }
+    </script>
+</div>
+<div th:replace="~{fragmentos/general.html :: footer}"></div>
+</body>
+
+</html>

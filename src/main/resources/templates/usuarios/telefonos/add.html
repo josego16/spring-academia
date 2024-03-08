@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro General: Gestión Teléfonos</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+<div class="container m-3">
+    <p>Añadiendo un teléfono al usuario:
+        <span th:text="${usuario.nombre}"></span>
+        <span th:text="${usuario.apellido}"></span>
+        (<span th:text="${usuario.username}"></span>)
+    </p>
+    <form class="row" method="post" th:action="@{|/usuarios/${usuario.id}/telefonos/add|}" th:object="${telefono}">
+        <!-- <input th:field="*{id}" type="hidden" /> -->
+        <!-- <input th:field="*{usuario.id}" type="hidden" />  -->
+        <div class="mb-3">
+            <label class="form-label">Código de país (sin el símbolo +):</label>
+            <label>
+                <input class="form-control" name="codigoPais" placeholder="Código del País, ej: 34" th:field="*{codigoPais}"
+                       type="number"/>
+            </label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Número de telefono (sin espacios):</label>
+            <label>
+                <input class="form-control" name="numero" placeholder="Escriba aquí el teléfono" th:field="*{numero}"
+                       type="number"/>
+            </label>
+        </div>
+        <div>
+            <button class="btn btn-success mt-3" type="submit">Enviar</button>
+        </div>
+    </form>
+</div>
+<div th:replace="~{fragmentos/general.html :: footer}"></div>
+</body>
+
+</html>
