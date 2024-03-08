@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Zapatería Online: Editar un usuario</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+
+<div class="container">
+    <h3>Editar usuario:</h3>
+
+    <form method="post" th:action="|/usuarios/add|" th:object="${usuario}">
+        <label>
+            <input hidden th:field="${usuario.id}"/>
+        </label>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre: </label>
+                    <label>
+                        <input class="form-control" th:field="*{nombre}" type="text"/>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Apellido: </label>
+                    <label>
+                        <input class="form-control" th:field="*{apellido}" type="text"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-4">
+                    <label class="form-label">Nombre de usuario: </label>
+                    <input class="form-control" th:field="*{username}" type="text"/>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Email:</label>
+                    <label>
+                        <input class="form-control" name="email" th:field="*{email}" type="email"/>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Contraseña:</label>
+                    <label>
+                        <input class="form-control" th:field="*{password}" type="password"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+
+                <div class="col-md-8">
+                    <label class="form-label">Teléfonos:</label>
+                    <div class="row">
+                        <div class="col">Código País</div>
+                        <div class="col">Número de Teléfono</div>
+                    </div>
+                    <div class="row" th:each="telefono, itemTelefono : *{telefonos}">
+                        <input th:field="*{telefonos[__${itemTelefono.index}__].id}" type="hidden"/>
+                        <label>
+                            <input class="form-control col" max="2000" min="1"
+                                   th:field="*{telefonos[__${itemTelefono.index}__].codigoPais}"
+                                   type="number"/>
+                        </label>
+                        <label>
+                            <input class="form-control col" max="999999999" min="1"
+                                   th:field="*{telefonos[__${itemTelefono.index}__].numero}"
+                                   type="number"/>
+                        </label>
+                    </div>
+                    <div class="row-md-6 pt-2">
+                        <div class="col">
+                            <a class="btn btn-success p-2" th:href="|/usuarios/${usuario.id}/telefonos/add|">Añadir
+                                teléfono</a>
+                            <a class="btn btn-warning p-2" th:href="|/usuarios/${usuario.id}/telefonos|">Gestión
+                                teléfonos</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="justify-content-center text-center">
+                        <label class="form-label">Roles:
+                            <select class="form-select" multiple="multiple" th:field="*{roles}">
+                                <option th:each="rol : ${roles}"
+                                        th:selected="${#lists.contains(usuario.roles, rol)} ? 'selected' : 'false'"
+                                        th:text="${rol.nombre}"
+                                        th:value="${rol.id}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="border">
+                <div class="row g-3 m-2">
+                    <div class="col-md-6">
+                        <button class="btn btn-success" type="submit">Actualizar usuario</button>
+                        <a class="btn btn-danger" href="/usuarios">Cancelar cambios</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div th:replace="~{fragmentos/general.html :: footer}"></div>
+
+</div>
+</body>
+
+</html>

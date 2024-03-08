@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro de Usuarios: Añadir un usuario</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+<body>
+
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+
+<div class="container">
+    <h3>Nuevo usuario</h3>
+
+    <form method="post" th:action="@{/usuarios/add}" th:object="${usuario}">
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre: <input class="form-control" th:field="*{nombre}" type="text"/></label>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Apellido: <input class="form-control" th:field="*{apellido}" type="text"/></label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Email: <input class="form-control" th:field="*{email}" type="email"/></label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre de usuario: <input class="form-control" th:field="*{username}" type="text"/></label>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Contraseña: <input class="form-control" th:field="*{password}" type="password"/></label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <!-- <div class="col-md-6">
+                    <label class="form-label">Teléfono:
+                        <select th:field="*{telefono}" class="form-select">
+                            <option th:each="telefono : ${telefonos}" th:value="${telefono.numero}"
+                                th:text="${telefono.numero}"></option>
+                        </select>
+                    </label>
+                </div> -->
+                <div class="col-md-6">
+                    <label class="form-label">Roles:
+                        <select class="form-select" multiple="multiple" th:field="*{roles}">
+                            <option th:each="rol : ${roles}" th:text="${rol.nombre}" th:value="${rol.id}"></option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="border">
+            <div class="row g-3 m-2">
+                <div class="col-md-6">
+                    <button class="btn btn-success" type="submit">Guardar</button>
+                    <a class="btn btn-danger" href="/usuarios">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div th:replace="~{fragmentos/general.html :: footer}"></div>
+</div>
+</body>
+</html>
