@@ -26,10 +26,10 @@ public class GeneralController {
         return "index";
     }
 
-    // @GetMapping("/login")
-    // public String showlogin() {
-    //     return "login";
-    // }
+    /*@GetMapping("/login")
+    public String showlogin() {
+        return "login";
+    }*/
 
     @GetMapping("/denegado")
     public String showlogin() {

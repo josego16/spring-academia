@@ -30,7 +30,7 @@ public class ControllerAsignatura {
     }
 
     @PostMapping("/add")
-    public String postMethodName(@ModelAttribute("Asignatura") Asignatura asignatura) {
+    public String postMethodName(@ModelAttribute("asignatura") Asignatura asignatura) {
         repoAsignatura.save(asignatura);
         return "redirect:/asignaturas";
     }
@@ -41,7 +41,7 @@ public class ControllerAsignatura {
             Optional<Asignatura> asignatura = repoAsignatura.findById(id);
             if (asignatura.isPresent()) {
                 // si existe la Asignatura
-                modelo.addAttribute("Asignatura", asignatura.get());
+                modelo.addAttribute("asignatura", asignatura.get());
                 return "asignaturas/delete";
             } else {
                 return "error";

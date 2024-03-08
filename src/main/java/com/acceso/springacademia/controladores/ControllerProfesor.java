@@ -19,8 +19,6 @@ public class ControllerProfesor {
     @Autowired
     private RepoProfesor repoProfesor;
     @Autowired
-    private RepoTelefono repoTelefono;
-    @Autowired
     private RepoRol repoRol;
 
     @GetMapping("/")
@@ -38,7 +36,6 @@ public class ControllerProfesor {
     @GetMapping("/add")
     public String addprofesor(Model modelo) {
         modelo.addAttribute("profesor", new Profesor());
-        modelo.addAttribute("telefonos", repoTelefono.findAll());
         modelo.addAttribute("roles", repoRol.findAll());
         return "profesores/add";
     }
