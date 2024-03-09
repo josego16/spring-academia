@@ -1,8 +1,10 @@
 package com.acceso.springacademia.controladores;
 
 import com.acceso.springacademia.modelos.Alumno;
+import com.acceso.springacademia.modelos.Asignatura;
 import com.acceso.springacademia.modelos.Telefono;
 import com.acceso.springacademia.repos.RepoAlumno;
+import com.acceso.springacademia.repos.RepoAsignatura;
 import com.acceso.springacademia.repos.RepoRol;
 import com.acceso.springacademia.repos.RepoTelefono;
 import lombok.NonNull;
@@ -23,6 +25,8 @@ public class ControllerAlumno {
     private RepoTelefono repoTelefono;
     @Autowired
     private RepoRol repoRol;
+    @Autowired
+    private RepoAsignatura repoAsignatura;
 
     @GetMapping("/")
     public String findAll(Model modelo) {
@@ -161,5 +165,154 @@ public class ControllerAlumno {
         modelo.addAttribute("alumno", optAlumno.get());
         modelo.addAttribute("telefono", oTelefono.get());
         return "alumnos/telefonos/edit";
+    }
+
+    @GetMapping("/{idAlumno}/telefonos/{idTel}/delete")
+    public String deletePhonesByUserIdForm(
+            @PathVariable @NonNull Long idAlumno,
+            @PathVariable @NonNull Integer idTel,
+            Model modelo) {
+
+        Optional<Alumno> optAlumno = repoAlumno.findById(idAlumno);
+        Optional<Telefono> optTelefono = repoTelefono.findById(idTel);
+
+        if (optAlumno.isEmpty() ||
+                optTelefono.isEmpty()) {
+            modelo.addAttribute(
+                    "mensaje", "El teléfono o alumno no existen");
+            return "error";
+        }
+
+        modelo.addAttribute("alumno", optAlumno.get());
+        modelo.addAttribute("telefono", optTelefono.get());
+
+        return "alumnos/telefonos/delete";
+    }
+
+    @PostMapping("/{idAlumno}/telefonos/{idTel}/delete")
+    public String deletePhonesByUserId(
+            @PathVariable @NonNull Long idAlumno,
+            @PathVariable @NonNull Integer idTel, Model modelo) {
+        Optional<Alumno> optAlumno = repoAlumno.findById(idAlumno);
+        Optional<Telefono> optTelefono = repoTelefono.findById(idTel);
+        if (optAlumno.isEmpty() || optTelefono.isEmpty()) {
+            modelo.addAttribute(
+                    "mensaje", "El teléfono o alumno no existen");
+            return "error";
+        }
+        if (optAlumno.get().getId() != optTelefono.get().getAlumno().getId()) {
+            modelo.addAttribute(
+                    "mensaje", "El teléfono no pertenece al alumno");
+            return "error";
+        }
+        repoTelefono.delete(optTelefono.get());
+        return "redirect:/alumnos/" + optAlumno.get().getId() + "/telefonos";
+    }
+
+    @GetMapping("/{id}/asignaturas/add")
+    public String alumnoAddAsignaturaForm(@PathVariable @NonNull Long id, Model modelo) {
+        Optional<Alumno> optAlumno = repoAlumno.findById(id);
+
+        if (optAlumno.isEmpty()) {
+            modelo.addAttribute("mensaje", "El alumno no existe");
+            return "error";
+        }
+        Asignatura asignatura = new Asignatura();
+        asignatura.setAlumno(optAlumno.get());
+
+        modelo.addAttribute("asignatura", asignatura);
+        modelo.addAttribute("alumno", optAlumno.get());
+
+        return "alumnos/asignaturas/add";
+    }
+
+    @PostMapping("/{id}/asignaturas/add")
+    public String alumnoAddAsignatura(
+            @PathVariable @NonNull Long id,
+            @ModelAttribute("asignatura") @NonNull Asignatura asignatura,
+            Model modelo) {
+
+        Optional<Alumno> optAlumno = repoAlumno.findById(id);
+
+        if (optAlumno.isEmpty()) {
+            modelo.addAttribute("mensaje", "El alumno no existe");
+            return "error";
+        }
+
+        repoAsignatura.save(asignatura);
+        return "redirect:/alumnos/" + id + "/asignaturas";
+    }
+
+    @GetMapping("/{id}/asignaturas")
+    public String getAsignaturaByAlumnoId(@PathVariable @NonNull Long id, Model modelo) {
+
+        Optional<Alumno> optAlumno = repoAlumno.findById(id);
+
+        if (optAlumno.isEmpty()) {
+            modelo.addAttribute("mensaje", "El alumno no existe");
+            return "error";
+        }
+
+        modelo.addAttribute("alumnos", repoAlumno.findAll());
+        modelo.addAttribute("alumnoActual", optAlumno.get());
+        modelo.addAttribute("asignaturas", optAlumno.get().getAsignaturas());
+
+        modelo.addAttribute("asignatura", new Asignatura());
+
+        return "alumnos/asignaturas/asignaturas";
+    }
+
+
+    @GetMapping("/{idAlumno}/asignaturas/{idAsig}/edit")
+    public String editAsignaturasByAlumnoIdForm(@PathVariable @NonNull Long idAlumno, @PathVariable @NonNull Long idAsig, Model modelo) {
+
+        Optional<Alumno> optAlumno = repoAlumno.findById(idAlumno);
+        Optional<Asignatura> optAsignatura = repoAsignatura.findById(idAsig);
+
+        if (optAlumno.isEmpty() || optAsignatura.isEmpty()) {
+            modelo.addAttribute("mensaje", "La asignatura o alumno no existen");
+            return "error";
+        }
+
+        modelo.addAttribute("alumno", optAlumno.get());
+        modelo.addAttribute("asignatura", optAsignatura.get());
+        return "alumnos/asignaturas/edit";
+    }
+
+    @GetMapping("/{idAlumno}/asignaturas/{idAsig}/delete")
+    public String deleteAsignturasByAlumnoIdForm(
+            @PathVariable @NonNull Long idAlumno,
+            @PathVariable @NonNull Long idAsig,
+            Model modelo) {
+
+        Optional<Alumno> optAlumno = repoAlumno.findById(idAlumno);
+        Optional<Asignatura> optAsignatura = repoAsignatura.findById(idAsig);
+
+        if (optAlumno.isEmpty() || optAsignatura.isEmpty()) {
+            modelo.addAttribute("mensaje", "El teléfono o alumno no existen");
+            return "error";
+        }
+        modelo.addAttribute("alumno", optAlumno.get());
+        modelo.addAttribute("telefono", optAsignatura.get());
+
+        return "alumnos/asignaturas/delete";
+    }
+
+    @PostMapping("/{idAlumno}/asignaturas/{idAsig}/delete")
+    public String deleteAsignaturaByAlumnoId(
+            @PathVariable @NonNull Long idAlumno,
+            @PathVariable @NonNull Long idAsig, Model modelo) {
+        Optional<Alumno> optAlumno = repoAlumno.findById(idAlumno);
+        Optional<Asignatura> optAsignatura = repoAsignatura.findById(idAsig);
+        if (optAlumno.isEmpty() || optAsignatura.isEmpty()) {
+            modelo.addAttribute("mensaje", "El teléfono o alumno no existen");
+            return "error";
+        }
+        if (optAlumno.get().getId() != optAsignatura.get().getAlumno().getId()) {
+            modelo.addAttribute("mensaje", "El teléfono no pertenece al alumno");
+            return "error";
+        }
+        repoAsignatura.delete(optAsignatura.get());
+        return "redirect:/alumnos/" + optAlumno.get().getId() + "/asignaturas";
     }
 }
