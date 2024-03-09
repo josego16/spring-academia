@@ -9,7 +9,7 @@ services:
     networks:
       - skynet
     ports:
-      - "33306:3306"
+      - ${MYSQL_HOST_PORT}:3306
     volumes:
       - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
@@ -19,7 +19,7 @@ services:
     networks:
       - skynet
     ports:
-      - "8181:8080"
+      - ${ADMINER_HOST_PORT}:8080
 
 networks:
   skynet:
