@@ -23,9 +23,15 @@ public class Alumno {
     private String username;
     @Column(length = 100)
     private String password;
+
     @ManyToMany
     private List<Rol> roles;
+
     @OneToMany
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "alumno_id")
     List<Telefono> telefonos;
+
+    @OneToMany
+    @JoinColumn(name = "alumno_id")
+    List<Asignatura> asignaturas;
 }

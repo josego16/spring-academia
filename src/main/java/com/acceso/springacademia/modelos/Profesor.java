@@ -23,6 +23,11 @@ public class Profesor {
     private String username;
     @Column(length = 100)
     private String password;
+
     @ManyToMany
     private List<Rol> roles;
+
+    @OneToMany
+    @JoinColumn(name = "profesor_id")
+    List<Asignatura> asignaturas;
 }
