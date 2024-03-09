@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     @Autowired
     private DataSource dataSource;
 
@@ -26,7 +27,7 @@ public class SecurityConfiguration {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled "
-                        + "from usuario "
+                        + "from usuario " // added space here
                         + "where username = ?")
                 .authoritiesByUsernameQuery("select username, rol.nombre  "
                         + "from usuario_roles, usuario, rol "
@@ -46,16 +47,14 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
-
         // Con Spring Security 6.2 y 7: usando Lambda DSL
-
         return http
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers("/webjars/**", "/img/**", "/js/**", "/register/**", "/ayuda/**", "/login", "/denegado")
                                 .permitAll()
-                                .requestMatchers("/usuarios/**", "categorias/**", "localidades/**", "/ayuda/**", "/acerca/**")
-                                /*.authenticated()*/
-                                .hasAuthority("admin")
+                                .requestMatchers("/usuarios/**", "/usuarios/*/**", "/usuarios/*/*/**", "alumnos/**", "profesores/**", "asignaturas/**", "/ayuda/**", "/acerca/**")
+                                //.authenticated()
+                                .hasAuthority("gestor")
                         /*.anyRequest().permitAll()
                 ).headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions
@@ -65,14 +64,14 @@ public class SecurityConfiguration {
                 ).exceptionHandling((exception) -> exception.
                         accessDeniedPage("/denegado"))
                 .formLogin((formLogin) -> formLogin
-                        /*.loginPage("/login")*/
+                        //.loginPage("/login")
                         .permitAll()
                 ).rememberMe(
                         Customizer.withDefaults()
                 ).logout((logout) -> logout
                         .invalidateHttpSession(true)
                         .logoutSuccessUrl("/")
-                        /*.deleteCookies("JSESSIONID") // no es necesario, JSESSIONID se hace por defecto*/
+                        //.deleteCookies("JSESSIONID")
                         .permitAll()
                 ).csrf((protection) -> protection
                                 .disable()
