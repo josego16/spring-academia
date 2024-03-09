@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Asignaturas de los alumnos</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+<div class="container">
+    <p>Seleccione un alumno para ver sus asignaturas:</p>
+    <form id="formulario" method="get" onchange="enviar()">
+        <div class="form-control">
+            <label for="alumno_actual">Selección del alumno a mostrar:</label>
+            <label for="seleccion"></label><select class="form-select" id="seleccion">
+            <option
+                    th:each="alumno : ${alumnos}"
+                    th:selected="(${alumno.id} == ${alumnoActual.id})?'selected':'false'"
+                    th:text="|${alumno.nombre} ${alumno.apellido}|"
+                    th:value="${alumno.id}">
+            </option>
+        </select>
+        </div>
+    </form>
+    <h4>
+        Listando asignaturas del alumno:
+        <span th:text="${alumnoActual.username}"></span>
+    </h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Nombre de la asignatura</td>
+            <td>Curso</td>
+            <td>Ciclo</td>
+            <td>Acciones</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="asignatura: ${asignaturas}">
+            <td th:text="${asignatura.nombre}"></td>
+            <td th:text="${asignatura.curso}"></td>
+            <td th:text="${asignatura.ciclo}"></td>
+            <td>
+                <a class="btn btn-success"
+                   th:href="|asignaturas/${asignatura.id}/edit|">Editar</a>
+                <a class="btn btn-danger"
+                   th:href="|asignaturas/${asignatura.id}/delete|">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="asignaturas/add">Añadir una asignatura </a>
+
+    <script>
+        function enviar() {
+            let formulario = document.getElementById('formulario');
+            let seleccionado = document.getElementById('seleccion')
+            formulario.action = '/alumnos/' + seleccionado.value + "/asignaturas"
+            formulario.submit();
+        }
+    </script>
+</div>
+<div th:replace="~{fragmentos/general.html :: footer}"></div>
+</body>
+
+</html>
