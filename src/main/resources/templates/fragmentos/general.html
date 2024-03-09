@@ -2,36 +2,35 @@
 <html lang="es">
 
 <head th:fragment="headerfiles">
+    <title></title>
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
-    <title></title>
 
 </head>
 
 <body>
 <div class="container-fluid">
     <div th:fragment="navigation">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" sec:authorize="hasAuthority('admin')">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" sec:authorize="hasAuthority('gestor')">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">I.E.S Virgen del Carmen</a>
-                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                <a class="navbar-brand" href="#">Registro General</a>
+                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
                         data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav_admin">
+                <div class="collapse navbar-collapse" id="navbarNav_gestor">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="/">Inicio </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                               href="#" role="button">
-                                Usuarios
-                            </a>
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                               role="button">Usuarios</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/usuarios"
                                        id="menu_modulo_usuarios">Lista-usuarios</a></li>
@@ -45,22 +44,33 @@
                                 Alumnos
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/categorias"
-                                       id="menu_modulo_alumnos">Lista-usuarios-</a></li>
-                                <li><a class="dropdown-item" href="/categorias/add" id="menu_enseñanza_alumnos">Agregar-alumno</a>
+                                <li><a class="dropdown-item" href="/alumnos" id="menu_modulo_alumnos">Lista alumnos</a>
+                                </li>
+                                <li><a class="dropdown-item" href="/alumnos/add" id="menu_enseñanza_alumnos">Agregar
+                                    alumno</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                               href="#" role="button">
-                                Profesores
-                            </a>
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                               role="button">Profesores</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/localidades" id="menu_modulo_profesores">Lista-profesores</a>
+                                <li><a class="dropdown-item" href="/profesores" id="menu_modulo_profesores">Lista
+                                    profesores</a>
                                 </li>
-                                <li><a class="dropdown-item" href="/localidades/add" id="menu_enseñanza_profesores">Agregar-profesor</a>
+                                <li><a class="dropdown-item" href="/profesores/add" id="menu_enseñanza_profesores">Agregar
+                                    profesor</a>
                                 </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                               role="button">Asignaturas</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/asignaturas" id="menu_modulo_asignaturas">Lista
+                                    asignaturas</a></li>
+                                <li><a class="dropdown-item" href="/asignaturas/add" id="menu_enseñanza_asignaturas">Agregar
+                                    asignatura</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -77,10 +87,11 @@
                 </div>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" sec:authorize="hasAuthority('alumno')">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" sec:authorize="hasAuthority('alumnado')">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">I.E.S Virgen del Carmen</a>
-                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
                         data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -109,13 +120,10 @@
         <footer>
             <div class="text-center">
                 <hr/>
-
-                <p>Entró en el sistema como:
+                <p>Entro al sistema como:
                     <span th:text="${#authentication.name}"></span>
                     (<span th:text="${#authentication.authorities[0]}"></span>)
-                </p>
-                <p sec:authorize="hasAuthority('admin')">
-                    <b>Este párrafo sólo se ve si eres un admin</b>
+                <p sec:authorize="hasAuthority('admin')"><b>Este párrafo sólo se ve si eres un admin</b></p>
                 </p>
                 <p>
                     <span class="text-center">Ⓒ 2024. IES Virgen del Carmen. CFGS Desarrollo Multiplataforma.</span>
@@ -129,5 +137,4 @@
     </div>
 </div>
 </body>
-
 </html>
