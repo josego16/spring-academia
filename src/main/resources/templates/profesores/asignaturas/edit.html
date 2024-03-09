@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Editar asignaturas</title>
+    <th:block th:replace="~{fragmentos/general.html :: headerfiles}"></th:block>
+</head>
+
+<body>
+<div th:replace="~{fragmentos/general.html :: navigation}"></div>
+<p>
+    Editando la asignatura para el profesor
+    <span th:text="${profesor.username}"></span>:
+</p>
+<div class="container m-3">
+    <form class="row"
+          method="post"
+          th:object="${asignatura}">
+        <!-- <input hidden th:field="*{asignatura.profesor}"/> -->
+        <div class="mb-3">
+            <label class="form-label" for="nombre-asignatura">Nombre de la asignatura</label>
+            <label>
+                <input class="form-control" name="nombre"
+                       placeholder="Escribe el nombre de la asignatura" th:field="*{asignatura.nombre}"
+                       type="text"/>
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="curso">Curso de la asignatura</label>
+            <label>
+                <input class="form-control" name="curso"
+                       placeholder="Escriba aquí el curso" th:field="*{asignatura.curso}"
+                       type="number"/>
+            </label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="ciclo">Ciclo de la asignatura</label>
+            <label>
+                <input class="form-control" name="ciclo"
+                       placeholder="Escriba aquí el ciclo" th:field="*{asignatura.ciclo}"
+                       type="text"/>
+            </label>
+        </div>
+
+        <div>
+            <button class="btn btn-success mt-3" type="submit">Enviar</button>
+        </div>
+    </form>
+</div>
+<div th:replace="~{fragmentos/general.html :: footer}"></div>
+</body>
+
+</html>
